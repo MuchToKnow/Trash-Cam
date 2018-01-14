@@ -44,6 +44,7 @@ module.exports.matching=function(jsonObjectArray, call2, response) {
     map["Hardware"] = 3;
     map["Bag"] = 3;
     map["Styrofoam"] = 3;
+    map["Tape"] = 3;
     map["Plastic Wrap"] = 3;
     map["Plastic Bag"] = 3;
 
