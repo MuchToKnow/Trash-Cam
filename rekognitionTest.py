@@ -23,7 +23,7 @@ import boto3
 
 
 BUCKET = "trash-cam"
-KEY = "1.jpg"
+KEY = "toProcess.jpg"
 
 
 
