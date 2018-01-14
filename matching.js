@@ -1,8 +1,8 @@
 function map(text) {
     var map = new Object();
-    var c = "compost"
-    var r = "recycle"
-    var t = "trash"
+    var c = "compost";
+    var r = "recycle";
+    var t = "trash";
     map["Food"] = c;
     map["Fruit"] = c;
     map["Vegetable"] = c;
