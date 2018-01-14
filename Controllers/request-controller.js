@@ -3,6 +3,7 @@ var S3FS = require('s3fs');
 const AWS = require('aws-sdk');
 var PythonShell = require('python-shell');
 var rekog = require('./js-rekognition');
+var match = require('./matching');
 
 //Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){
@@ -31,11 +32,14 @@ module.exports.request = function(request, response){
 			else{
 				console.log(data);
 				console.log("trying recognition");
-				console.log(rekog.rekog());
+				rekog.rekog(match.matching, doAfter, response);
 				console.log("recognition done");
-				response.json({
-					status : 1
-				});
 			}
 		});
 	}
+
+function doAfter(data, response){
+	response.json({
+		status : data
+	});
+}
