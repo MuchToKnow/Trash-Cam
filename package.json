@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/MuchToKnow/nwHacks2018/issues"
   },
-  "homepage": "https://github.com/MuchToKnow/nwHacks2018#readme"
+  "homepage": "https://github.com/MuchToKnow/nwHacks2018#readme",
+  "dependencies": {
+    "aws-sdk": "^2.181.0",
+    "express": "^4.16.2",
+    "python-shell": "^0.4.0",
+    "s3fs": "^2.5.0"
+  }
 }

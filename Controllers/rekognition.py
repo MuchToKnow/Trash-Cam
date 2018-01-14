@@ -1,12 +1,12 @@
 import boto3
-
+import sys
 
 BUCKET = "trash-cam"
-KEY = "toProcess.jpg"
+KEY = "10.jpg"
 
 
 
-def detect_labels(bucket, key, max_labels=10, min_confidence=90, region="us-east-1"):
+def detect_labels(bucket, key, max_labels=20, min_confidence=50, region="us-east-1"):
 	rekognition = boto3.client("rekognition", region)
 	response = rekognition.detect_labels(
 		Image={
@@ -22,7 +22,11 @@ def detect_labels(bucket, key, max_labels=10, min_confidence=90, region="us-east
 
 
 for label in detect_labels(BUCKET, KEY):
-	print ("{Name} - {Confidence}".format(**label))
+    #sys.stdout.write(label)
+    #sys.stdout.flush()
+    #print ("{Name} - {Confidence}".format(**label))
+    print ("{Name}, ".format(**label), end='')
+    sys.stdout.flush()
 
 
 
