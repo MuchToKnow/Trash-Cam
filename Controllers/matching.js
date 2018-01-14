@@ -1,4 +1,4 @@
-function map(text) {
+function map(jsonObjectArray) {
     var map = new Object();
     var c = "compost";
     var r = "recycle";
@@ -17,11 +17,11 @@ function map(text) {
     map["Bag"] = t;
     map["Styrofoam"] = t;
     
-    var objects = text.split(",");
     
-    for (int i = 0; i < objects.length; i++) {
-        if (objects(i) in map) {
-            return map[objects(i)];
+    for (int i = 0; i < jsonObjectArray.length; i++) {
+        var object = jsonObjectArray[i].name;
+        if (object in map) {
+            return map[object];
         }
     }
     
