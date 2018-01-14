@@ -1,6 +1,6 @@
-var garbageCount = 10;
-var recycleCount = 4;
-var compostCount = 6;
+var garbageCount = 0;
+var recycleCount = 0;
+var compostCount = 0;
 
 const express = require('express');
 const app = express();
