@@ -35,6 +35,9 @@ module.exports.request = function(request, response){
 					console.log(message);
 				})
 				console.log("recognition done");
+				response.json({
+					status : 1
+				});
 			}
 		});
 	}
