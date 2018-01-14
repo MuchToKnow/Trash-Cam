@@ -1,6 +1,6 @@
 var garbageCount = 30;
-var recycleCount = 15;
-var compostCount = 15;
+var recycleCount = 23;
+var compostCount = 10;
 
 const express = require('express');
 const app = express();
@@ -45,3 +45,15 @@ app.get('/api/getCompost', function(request,response) {
   console.log("get compost")
   response.send({"compost":compostCount});
 });
+
+
+function incrementGarbage() {
+  garbageCount ++;
+}
+
+function incrementRecycle() {
+  recycleCount ++;
+}
+function incrementCompost() {
+  compostCount ++;
+}

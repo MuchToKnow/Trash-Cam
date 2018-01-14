@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 var PythonShell = require('python-shell');
 var rekog = require('./js-rekognition');
 var match = require('./matching');
+var server = require('~/server.js');
 
 //Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){
@@ -39,7 +40,13 @@ module.exports.request = function(request, response){
 	}
 
 function doAfter(data, response){
-	response.json({
+  switch (data) {
+    case 1: server.incrementCompost
+    case 2: server.incrementRecycle
+    case 3: server.incrementGarbage
+  }
+
+  response.json({
 		status : data
 	});
 }

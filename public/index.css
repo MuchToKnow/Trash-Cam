@@ -4,9 +4,14 @@
 
 }
 
+#chart {
+  background-color: #E0E0E0;
+  padding: 10px;
+}
+
 body {
   padding-top: 50px;
-  background-color: #BDBDBD;
+  background-color: #B0BEC5;
 }
 .starter-template {
   padding: 40px 15px;
