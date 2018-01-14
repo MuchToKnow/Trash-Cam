@@ -61,14 +61,10 @@ def main():
         print("Unable to open camera")
         clean_exit()
 
-    # Reset Servo Location
+    # Start the Servos
     serv1.start(10.5)
     serv2.start(10.5)
     serv3.start(10.5)
-    time.sleep(1)
-    serv1.stop()
-    serv2.stop()
-    serv3.stop()
 
     print(cont)
     while cont:
@@ -96,30 +92,21 @@ def main():
 
             # Compost
             if jsresp == 1:
-                serv1.start(10.5)
                 serv1.ChangeDutyCycle(2.5)
                 time.sleep(8)
                 serv1.ChangeDutyCycle(10.5)
-                serv1.stop()
             # Recycle
             elif jsresp == 2:
-                serv2.start(10.5)
                 serv2.ChangeDutyCycle(2.5)
                 time.sleep(8)
                 serv2.ChangeDutyCycle(10.5)
-                serv2.stop()
             # Trash
             elif jsresp == 3:
-                serv3.start(10.5)
                 serv3.ChangeDutyCycle(2.5)
                 time.sleep(8)
                 serv3.ChangeDutyCycle(10.5)
-                serv3.stop()
             # ALL
             else:
-                serv1.start(10.5)
-                serv2.start(10.5)
-                serv3.start(10.5)
                 serv1.ChangeDutyCycle(2.5)
                 serv2.ChangeDutyCycle(2.5)
                 serv3.ChangeDutyCycle(2.5)
@@ -127,15 +114,15 @@ def main():
                 serv1.ChangeDutyCycle(10.5)
                 serv2.ChangeDutyCycle(10.5)
                 serv3.ChangeDutyCycle(10.5)
-                serv1.stop()
-                serv2.stop()
-                serv3.stop()
 
             time.sleep(5)
         else:
             cooldown = cooldown - 1
 
     print("Stopping Servos")
+    serv1.stop()
+    serv2.stop()
+    serv3.stop()
     cam.release()
 
 def clean_exit():
