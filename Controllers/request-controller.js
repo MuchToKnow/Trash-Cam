@@ -40,6 +40,7 @@ module.exports.request = function(request, response){
 	}
 
 function doAfter(data, response){
+  console.log("doAfter " + data)
   switch (data) {
     case 1: server.incrementCompost
     case 2: server.incrementRecycle
