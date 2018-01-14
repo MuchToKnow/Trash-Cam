@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-module.exports.rekog = function(){
+module.exports.rekog = function(callback){
 	var rekognition = new AWS.Rekognition({apiVersion: '2016-06-27'});
 	console.log("running rekog");
 	var params = {
@@ -19,6 +19,8 @@ rekognition.detectLabels(params, function(err, data){
 	}
 	else{
 		console.log(data);
+		console.log("trying callback");
+		return callback(data);
 	}
 	});
 }
