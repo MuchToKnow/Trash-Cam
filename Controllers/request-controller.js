@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 var PythonShell = require('python-shell');
 var rekog = require('./js-rekognition');
 var match = require('./matching');
-var server = require('~/server.js');
+var server = require('./../server.js');
 
 //Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){

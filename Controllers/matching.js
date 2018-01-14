@@ -35,7 +35,7 @@ module.exports.matching=function(jsonObjectArray, call2, response) {
     map["Styrofoam"] = 3;
     map["Plastic Wrap"] = 3;
     map["Plastic Bag"] = 3;
-    
+
     console.log("matching...");
     console.log(jsonObjectArray.Labels.length);
     for (var i = 0; i < jsonObjectArray.Labels.length; i++) {
