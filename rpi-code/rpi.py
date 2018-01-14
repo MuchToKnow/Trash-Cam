@@ -1,7 +1,7 @@
 import requests
 import base64
 import numpy as np
-from cv2 import *
+import cv2
 import json
 import RPi.GPIO as GPIO
 import time
@@ -16,17 +16,17 @@ cont = True
 
 def find_marker(image):
     # convert the image to grayscale, blur it, and detect edges
-    gray = cvtColor(image, COLOR_BGR2GRAY)
-    gray = GaussianBlur(gray, (5, 5), 0)
-    edged = Canny(gray, 35, 125)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (5, 5), 0)
+    edged = cv2.Canny(gray, 35, 125)
  
     # find the contours in the edged image and keep the largest one;
     # we'll assume that this is our piece of paper in the image
-    (cnts, _) = findContours(edged.copy(), RETR_LIST, CHAIN_APPROX_SIMPLE)
-    c = max(cnts, key = contourArea)
+    (cnts, _) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    c = cv2.max(cnts, key = contourArea)
  
     # compute the bounding box of the of the paper region and return it
-    return minAreaRect(c)[1]
+    return cv2.minAreaRect(c)[1]
  
 def large_enough(image, threshold):
     area = find_marker(image) 
@@ -43,7 +43,7 @@ def main():
     GPIO.setup(15, GPIO.OUT)
     serv3 = GPIO.PWM(15, 50)
 
-    cam = VideoCapture(0)
+    cam = cv2.VideoCapture(0)
     if not cam.isOpened():
         print("Unable to open camera")
         clean_exit()
