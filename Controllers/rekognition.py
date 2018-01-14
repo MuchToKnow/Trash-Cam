@@ -22,7 +22,9 @@ def detect_labels(bucket, key, max_labels=20, min_confidence=50, region="us-east
 
 
 for label in detect_labels(BUCKET, KEY):
-	print ("{Name} - {Confidence}".format(**label))
+    #    sys.stdout.write("\r%d" % i)
+
+    print ("{Name} - {Confidence}".format(**label))
 	sys.stdout.flush()
 
 
