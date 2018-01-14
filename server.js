@@ -33,20 +33,21 @@ app.get('/api/getStats', function(request, response) {
 
 
 
-var incGarbage = function() {
+modules.exports.incGarbage = function() {
   console.log("garbage increment");
   garbageCount ++;
 }
-module.exports.incGarbage = incGarbage;
+//module.exports.incGarbage = incGarbage;
 
-var incRecycle = function() {
+
+modules.exports.incRecycle = function() {
     console.log("recycle increment");
   recycleCount ++;
 }
-module.exports.incRecycle = incRecycle;
+//module.exports.incRecycle = incRecycle;
 
-var incCompost = function() {
+modules.exports.incCompost = function() {
     console.log("compost increment");
   compostCount ++;
 }
-module.exports.incCompost = incCompost;
+//module.exports.incCompost = incCompost;
