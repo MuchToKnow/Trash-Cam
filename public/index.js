@@ -2,29 +2,46 @@
 //var urlRecycle = "35.163.191.108/api/getRecycle";
 //var urlCompost = "35.163.191.108/api/getCompost";
 
-var urlGarbage = "localhost:3000/api/getGarbage";
-var urlRecycle = "localhost:3000/api/getRecycle";
-var urlCompost = "localhost:3000/api/getCompost";
+function getData(callback) {
+  $.getJSON('./api/getStats',function(data){
+    console.log(data.garbage);
 
 
-function getGarbage(url) {
+       callback(data.garbage,data.recycle, data.compost);
 
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", url, false ); // false for synchronous request
-  xmlHttp.send( null );
-  return xmlHttp.responseText;
+  });
+
 }
 
-function getRecycle(url) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", url, false ); // false for synchronous request
-  xmlHttp.send( null );
-  return xmlHttp.responseText;
+
+
+
+/*
+function getGarbage() {
+
+  $.getJSON('./api/getGarbage',function(data){
+    console.log(data.garbage);
+    return data.garbage;
+
+  });
+
 }
 
-function getCompost(url) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", url, false ); // false for synchronous request
-  xmlHttp.send( null );
-  return xmlHttp.responseText;
+function getRecycle(urlRecycle) {
+
+    $.getJSON('./api/getRecycle',function(data){
+      return data.recycle;
+    });
+
+//return 50;
 }
+
+function getCompost(urlCompost) {
+
+  $.getJSON('./api/getCompost',function(data){
+    return data.compost;
+  });
+
+//return 5;
+}
+*/
