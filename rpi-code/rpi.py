@@ -11,6 +11,8 @@ import signal
 
 img_path = "im2.jpg"
 url = "http://35.163.191.108:3000/api/request"
+aves = [10000, 10000, 10000, 10000] 
+aveidx = 0
 
 cont = True
 
@@ -23,7 +25,7 @@ def find_marker(image):
     # find the contours in the edged image and keep the largest one;
     # we'll assume that this is our piece of paper in the image
     (cnts, _) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    c = cv2.max(cnts, key = contourArea)
+    c = max(cnts, key = cv2.contourArea)
  
     # compute the bounding box of the of the paper region and return it
     return cv2.minAreaRect(c)[1]
@@ -31,7 +33,13 @@ def find_marker(image):
 def large_enough(image, threshold):
     area = find_marker(image) 
     area = area[0] * area[1]
-    return area > threshold
+    print(area)
+
+    aves[aveidx % len(aves)] = area
+    area = sum(aves)/len(aves)
+    aveidx = aveidx + 1
+
+    return area < threshold
 
 def main():
     print("Initing GPIO and Webcam")
@@ -63,9 +71,9 @@ def main():
             clean_exit()
             sys.exit(1)
 
-        s, jimg = imencode(".jpeg", img)
+        s, jimg = cv2.imencode(".jpeg", img)
 
-        isObj = large_enough(img, 100000)
+        isObj = large_enough(img, 5000)
 
         if isObj:
             b64img = base64.b64encode(jimg)
