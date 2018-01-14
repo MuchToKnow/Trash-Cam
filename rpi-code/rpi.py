@@ -12,10 +12,10 @@ url = "http://35.163.191.108:3000/api/request"
 
 def main():
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(11, GPIO.OUT)
-    serv1 = GPIO.PWM(11, 50)
     GPIO.setup(13, GPIO.OUT)
-    serv2 = GPIO.PWM(13, 50)
+    serv1 = GPIO.PWM(13, 50)
+    GPIO.setup(11, GPIO.OUT)
+    serv2 = GPIO.PWM(11, 50)
     GPIO.setup(15, GPIO.OUT)
     serv3 = GPIO.PWM(15, 50)
 
@@ -40,34 +40,34 @@ def main():
     print(jsresp)
 
 
-    serv1.start(2.5)
-    serv2.start(2.5)
-    serv3.start(2.5)
+    serv1.start(12.5)
+    serv2.start(12.5)
+    serv3.start(12.5)
 
     # Compost
     if jsresp == 1:
-        serv1.ChangeDutyCycle(12.5)
-        time.sleep(8)
         serv1.ChangeDutyCycle(2.5)
+        time.sleep(8)
+        serv1.ChangeDutyCycle(12.5)
     # Recycle
     elif jsresp == 2:
-        serv2.ChangeDutyCycle(12.5)
-        time.sleep(8)
         serv2.ChangeDutyCycle(2.5)
+        time.sleep(8)
+        serv2.ChangeDutyCycle(12.5)
     # Trash
     elif jsresp == 3:
-        serv3.ChangeDutyCycle(12.5)
-        time.sleep(8)
         serv3.ChangeDutyCycle(2.5)
+        time.sleep(8)
+        serv3.ChangeDutyCycle(12.5)
     # ALL
     else:
-        serv1.ChangeDutyCycle(12.5)
-        serv2.ChangeDutyCycle(12.5)
-        serv3.ChangeDutyCycle(12.5)
-        time.sleep(8)
         serv1.ChangeDutyCycle(2.5)
         serv2.ChangeDutyCycle(2.5)
         serv3.ChangeDutyCycle(2.5)
+        time.sleep(8)
+        serv1.ChangeDutyCycle(12.5)
+        serv2.ChangeDutyCycle(12.5)
+        serv3.ChangeDutyCycle(12.5)
 
     time.sleep(5)
     serv1.stop()
