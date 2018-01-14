@@ -33,19 +33,19 @@ app.get('/api/getStats', function(request, response) {
 
 
 
-var incGarbage = function incrementGarbage() {
+var incGarbage = function() {
   console.log("garbage increment");
   garbageCount ++;
 }
 module.exports.incGarbage = incGarbage;
 
-var incRecycle = function incrementRecycle() {
+var incRecycle = function() {
     console.log("recycle increment");
   recycleCount ++;
 }
 module.exports.incRecycle = incRecycle;
 
-var incCompost = function incrementCompost() {
+var incCompost = function() {
     console.log("compost increment");
   compostCount ++;
 }
