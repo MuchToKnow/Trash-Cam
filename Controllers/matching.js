@@ -1,4 +1,4 @@
-module.exports.matching=function(jsonObjectArray) {
+module.exports.matching=function(jsonObjectArray, call2, response) {
     var map = new Object();
     var c = "compost";
     var r = "recycle";
@@ -24,9 +24,12 @@ module.exports.matching=function(jsonObjectArray) {
         console.log("for loop firing");
         if (object in map) {
             console.log(map[object]);
-            return map[object];
+            call2(map[object], response);
+            return 0;
+            //return(map[object]);
         }
     }
     console.log(0);
-    return 0;
+    call2(0, response);
+    return(0);
 }
