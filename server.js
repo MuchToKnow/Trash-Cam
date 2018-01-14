@@ -7,8 +7,8 @@ var port = 3000;
 var sqlite3 = require('sqlite3').verbose(); // why verbose
 var db = new sqlite3.Database('Scores.db');
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended:true}));
 
 // setting up server
 app.listen(port, function(){
