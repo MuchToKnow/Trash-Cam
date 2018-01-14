@@ -1,9 +1,11 @@
 const fs = require('fs');
 var S3FS = require('s3fs');
 const AWS = require('aws-sdk');
+const rekog = require('/rekognition-controller.js')
 
 //Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){
+		console.log("request firing");
 		var image = request.body.image;
 		var buf = new Buffer(request.body.image.replace(/^data:image\/\w+;base64,/, ""), "base64");
 		AWS.config.update({
@@ -23,11 +25,11 @@ module.exports.request = function(request, response){
 		};
 		s3.putObject(params, function(err,data){
 			if(err){
-
 				console.log(err, err.stack);
 			}
 			else{
 				console.log(data);
+				rekog.getRekognition();
 			}
 		});
 	}

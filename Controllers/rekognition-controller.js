@@ -10,7 +10,7 @@ function getRekognition () {
     console.log(uint8arrayToString(data));
   });
 }
-
+module.exports.getRekognition = getRekognition();
 
 /*
 // for aws rekognition
