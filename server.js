@@ -23,21 +23,17 @@ var requestController = require('./Controllers/request-controller');
 
 app.post('/api/request',requestController.request);
 
-app.get('/api/getGarb', getGarbage);
+app.get('/api/getGarbage', function(request,response) {
+  console.log("get garb")
+  response.send({"garbage":garbageCount});
+});
 
-app.get('/api/getCompost', getCompost);
+app.get('/api/getRecycling', function(request,response) {
+  console.log("get recycle")
+  response.send({"recycle":recycleCount});
+});
 
-app.get('/api/getRecycling', getRecycling);
-
-function getGarbage(){
-  return garbageCount;
-}
-
-function getCompost() {
-  return compostCount;
-}
-
-function getRecycling() {
-  return recycleCount;
-}
-
+app.get('/api/getCompost', function(request,response) {
+  console.log("get compost")
+  response.send({"compost":compostCount});
+});
