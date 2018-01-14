@@ -10,7 +10,7 @@ module.exports.rekog = function(callback, call2, response){
 			Name: "toProcess.jpg"
 		}
 	},
-	MaxLabels: 15,
+	MaxLabels: 8,
 	MinConfidence: 50
 };
 rekognition.detectLabels(params, function(err, data){
