@@ -11,9 +11,13 @@ module.exports.matching=function(jsonObjectArray, call2, response) {
     map["Metal"] = 2;
     map["Glass"] = 2;
     map["Carton"] = 2;
+    map["Cardboard"] = 2;
+    map["Box"] = 2;
     map["Cup"] = 2;
     map["Bottle"] = 2;
     map["Paper"] = 2;
+    map["Beer Bottle"] = 2;
+    map["Drink"] = 2;
     map["Bag"] = 3;
     map["Styrofoam"] = 3;
     
@@ -21,7 +25,6 @@ module.exports.matching=function(jsonObjectArray, call2, response) {
     console.log(jsonObjectArray.Labels.length);
     for (var i = 0; i < jsonObjectArray.Labels.length; i++) {
         var object = jsonObjectArray.Labels[i].Name;
-        console.log("for loop firing");
         if (object in map) {
             console.log(map[object]);
             call2(map[object], response);
