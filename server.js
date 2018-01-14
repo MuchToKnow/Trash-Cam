@@ -27,33 +27,22 @@ var requestController = require('./Controllers/request-controller');
 app.post('/api/request',requestController.request);
 
 app.get('/api/getStats', function(request, response) {
-  console.log("GET request for stats");
   response.send({"garbage": garbageCount, "recycle": recycleCount, "compost": compostCount});
 });
 
-app.get('/api/getGarbage', function(request,response) {
-  console.log("get garb")
-  response.send({"garbage":garbageCount});
-});
 
-app.get('/api/getRecycle', function(request,response) {
-  console.log("get recycle")
-  response.send({"recycle":recycleCount});
-});
-
-app.get('/api/getCompost', function(request,response) {
-  console.log("get compost")
-  response.send({"compost":compostCount});
-});
 
 
 function incrementGarbage() {
+  console.log("garbage increment")
   garbageCount ++;
 }
 
 function incrementRecycle() {
+    console.log("recycle increment")
   recycleCount ++;
 }
 function incrementCompost() {
+    console.log("compost increment")
   compostCount ++;
 }
