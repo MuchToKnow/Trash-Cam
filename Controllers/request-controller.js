@@ -1,7 +1,7 @@
 const fs = require('fs');
 var S3FS = require('s3fs');
 const AWS = require('aws-sdk');
-const rekog = require('/rekognition-controller.js')
+var PythonShell = require('python-shell');
 
 //Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){
@@ -29,7 +29,12 @@ module.exports.request = function(request, response){
 			}
 			else{
 				console.log(data);
-				rekog.getRekognition();
+				console.log("trying recognition");
+				var shell = new PythonShell('/Controllers/rekognition.py', {mode: 'text'});
+				shell.on('message', function(message){
+					console.log(message);
+				})
+				console.log("recognition done");
 			}
 		});
 	}

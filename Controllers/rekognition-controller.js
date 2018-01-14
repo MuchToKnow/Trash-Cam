@@ -1,14 +1,13 @@
-
-
 function getRekognition () {
-  var rekognitionScript = "rekognition.py";
-
-  var spawn = require("child_process").spawn;
+  //var rekognitionScript = "rekognition.py";
+  console.log("right before data return");
+  /*var spawn = require("child_process").spawn;
   var process = spawn('python',["rekognition.py"]);
 
   process.stdout.on('data', (data) => {
     console.log(uint8arrayToString(data));
-  });
+    return data;
+  });*/
 }
 module.exports.getRekognition = getRekognition();
 
