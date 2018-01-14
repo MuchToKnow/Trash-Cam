@@ -3,6 +3,7 @@ function map(text) {
     var c = "compost";
     var r = "recycle";
     var t = "trash";
+    var a = "all";
     map["Food"] = c;
     map["Fruit"] = c;
     map["Vegetable"] = c;
@@ -23,4 +24,6 @@ function map(text) {
             return map[objects(i)];
         }
     }
+    
+    return a;
 }
