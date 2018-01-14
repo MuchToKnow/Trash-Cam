@@ -32,10 +32,14 @@ module.exports.request = function(request, response){
 			else{
 				console.log(data);
 				console.log("trying recognition");
-				response.json({
-					status : rekog.rekog(match.matching)
-				});
+				rekog.rekog(match.matching, doAfter, response);
 				console.log("recognition done");
 			}
 		});
 	}
+
+function doAfter(data, response){
+	response.json({
+		status : data
+	});
+}

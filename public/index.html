@@ -4,33 +4,32 @@
   <head>
 
 <!--
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 -->
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
 
-    <title>TrashCam</title>
+  <title>TrashCam</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="index.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="index.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
 
 <!--TODO -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
 
 
 
@@ -40,7 +39,7 @@
 
     <div class="container">
       <div id="header" class="col-md-12">
-        <h1>Trash Stats</h1>
+        <h1>TrashCam.tech</h1>
       </div>
 
     </div>
@@ -48,23 +47,132 @@
 
 
     <div class="container">
+      <div class="col-md-12">
+        <h1>Stats about your cans </h1>
+      </div>
+
+    </div>
+
+    <div class="container">
+      <div class="col-md-6">
+
+        <h3>Trash Type Variation</h3>
+
+        <h1></h1>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+        <script src="index.js"></script>
+
+        <canvas id="doughnut-chart" width="400" height="400"></canvas>
+        <script>
+
+          var trashVal = getTrash();
+          var recycleVal = getRecycle();
+          var compostVal = getCompost();
+
+          new Chart(document.getElementById("doughnut-chart"), {
+            type: 'doughnut',
+            data: {
+              labels: ["Trash", "Recycling", "Compost"],
+              datasets: [
+                {
+                  backgroundColor: ["#61616199", "#42A5F599","#4CAF5099"],
+                  borderColor: ["#616161", "#42A5F5", "#4CAF50"],
+                  data: [trashVal,recycleVal,compostVal]
+                }
+              ]
+            },
+            options: {
+              hover: false,
+              title: {
+                display: false,
+                text: 'Trash type'
+              }
+            }
+          });
+
+        </script>
+
+      </div>
 
       <div class="col-md-6">
-        <h1>title 1</h1>
 
 
-          <div id="pieChart"></div>
-
-          <script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.7.2/d3.min.js"></script>
-          <script src="d3pie.min.js"></script>
-          <script src="index.js"></script>
+        <h3>Percentage Full</h3>
+        <h1></h1>
+        <h1></h1>
 
 
-          <script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+        <script src="index.js"></script>
 
-            var trashVal = getTrash();
-            var recycleVal = getRecycle();
-            var compostVal = getCompost();
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
+
+          var trashVal = getTrash();
+          var recycleVal = getRecycle();
+          var compostVal = getCompost();
+
+          var total = trashVal + recycleVal + compostVal;
+
+          trashVal = trashVal / total * 100;
+          recycleVal = recycleVal / total * 100;
+          compostVal = compostVal / total * 100;
+
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: ["Trash", "Recycling", "Compost"],
+                  datasets: [{
+                      data: [trashVal, recycleVal, compostVal],
+                      backgroundColor: ["#61616199", "#42A5F599","#4CAF5099"],
+                      borderColor: ["#616161", "#42A5F5", "#4CAF50"],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                hover: false,
+                legend: {
+                  display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true,
+                            steps: 10,
+                            stepValue: 5,
+                            max: 100
+                        }
+                    }]
+                }
+              }
+          });
+
+        </script>
+
+
+      </div>
+
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Latest compiled and minified CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
+
+
+
+
+<!--
 
 
             var pie = new d3pie("pieChart", {
@@ -152,28 +260,5 @@
               }
             });
 
-          </script>
 
-
-
-      </div>
-
-      <div class="col-md-6">
-        <h1>title 2</h1>
-        <p class="lead">wefjawljfeafewjafjkhefj;aewfj;ah;</p>
-      </div>
-
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- Latest compiled and minified CSS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
-</html>
+-->
