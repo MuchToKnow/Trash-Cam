@@ -53,6 +53,7 @@ def main():
     serv2.start(12.5)
     serv3.start(12.5)
 
+    print(cont)
     while cont:
         print("Starting img capture")
         if cam.isOpened():
@@ -102,12 +103,14 @@ def main():
 
             time.sleep(5)
 
-        serv1.stop()
-        serv2.stop()
-        serv3.stop()
-        cam.release()
+    print("Stopping Servos")
+    serv1.stop()
+    serv2.stop()
+    serv3.stop()
+    cam.release()
 
 def clean_exit():
+    print("Cleaning up")
     GPIO.cleanup()
 
 def signal_handler(signal, frame):
