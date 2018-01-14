@@ -11,6 +11,8 @@ import signal
 
 img_path = "im2.jpg"
 url = "http://35.163.191.108:3000/api/request"
+aves = [10000, 10000, 10000, 10000] 
+aveidx = 0
 
 cont = True
 
@@ -32,6 +34,11 @@ def large_enough(image, threshold):
     area = find_marker(image) 
     area = area[0] * area[1]
     print(area)
+
+    aves[aveidx % len(aves)] = area
+    area = sum(aves)/len(aves)
+    aveidx = aveidx + 1
+
     return area < threshold
 
 def main():
