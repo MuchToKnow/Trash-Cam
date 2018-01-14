@@ -5,6 +5,7 @@ var PythonShell = require('python-shell');
 var rekog = require('./js-rekognition');
 var match = require('./matching');
 var server = require('./../server.js');
+var keys = require('./../keys.js')
 
 //Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){
@@ -12,8 +13,8 @@ module.exports.request = function(request, response){
 		var image = request.body.image;
 		var buf = new Buffer(request.body.image.replace(/^data:image\/\w+;base64,/, ""), "base64");
 		AWS.config.update({
-  		accessKeyId: 'AKIAI7GICYUEB2SRSQUA',
-  		secretAccessKey: 'D+uLnTf5qzV0lt3vZVCIkbMs1cO8Ye4lcpGCq9h5',
+  		accessKeyId: keys.key0,
+  		secretAccessKey: keys.key1,
   		region: 'us-east-1'
 		});
 		const s3 = new AWS.S3({
