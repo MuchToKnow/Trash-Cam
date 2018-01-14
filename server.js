@@ -1,3 +1,7 @@
+var garbageCount = 0;
+var recycleCount = 0;
+var compostCount = 0;
+
 const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
@@ -18,3 +22,22 @@ app.listen(port, function(){
 var requestController = require('./Controllers/request-controller');
 
 app.post('/api/request',requestController.request);
+
+app.get('/api/getGarb', getGarbage);
+
+app.get('/api/getCompost', getCompost);
+
+app.get('/api/getRecycling', getRecycling);
+
+function getGarbage(){
+  return garbageCount;
+}
+
+function getCompost() {
+  return compostCount;
+}
+
+function getRecycling() {
+  return recycleCount;
+}
+
