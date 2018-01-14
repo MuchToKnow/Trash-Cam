@@ -61,7 +61,6 @@ def main():
             print("Camera Lost")
             clean_exit()
             sys.exit(1)
-        cam.release()
 
         s, jimg = imencode(".jpeg", img)
 
@@ -106,6 +105,7 @@ def main():
         serv1.stop()
         serv2.stop()
         serv3.stop()
+        cam.release()
 
 def clean_exit():
     GPIO.cleanup()
