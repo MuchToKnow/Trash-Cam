@@ -13,6 +13,7 @@ img_path = "im2.jpg"
 url = "http://35.163.191.108:3000/api/request"
 aves = [10000, 10000, 10000, 10000] 
 aveidx = 0
+cooldown = 10
 
 cont = True
 
@@ -31,6 +32,8 @@ def find_marker(image):
     return cv2.minAreaRect(c)[1]
  
 def large_enough(image, threshold):
+    global aveidx
+
     area = find_marker(image) 
     area = area[0] * area[1]
     print(area)
@@ -39,9 +42,11 @@ def large_enough(image, threshold):
     area = sum(aves)/len(aves)
     aveidx = aveidx + 1
 
+    print(area)
     return area < threshold
 
 def main():
+    global cooldown
     print("Initing GPIO and Webcam")
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(13, GPIO.OUT)
@@ -57,9 +62,9 @@ def main():
         clean_exit()
 
     # Start the Servos
-    serv1.start(12.5)
-    serv2.start(12.5)
-    serv3.start(12.5)
+    serv1.start(10.5)
+    serv2.start(10.5)
+    serv3.start(10.5)
 
     print(cont)
     while cont:
@@ -73,9 +78,10 @@ def main():
 
         s, jimg = cv2.imencode(".jpeg", img)
 
-        isObj = large_enough(img, 5000)
+        isObj = large_enough(img, 6000)
 
-        if isObj:
+        if isObj and cooldown < 0:
+            cooldown = 10
             b64img = base64.b64encode(jimg)
 
             print("Sending POST")
@@ -88,28 +94,30 @@ def main():
             if jsresp == 1:
                 serv1.ChangeDutyCycle(2.5)
                 time.sleep(8)
-                serv1.ChangeDutyCycle(12.5)
+                serv1.ChangeDutyCycle(10.5)
             # Recycle
             elif jsresp == 2:
                 serv2.ChangeDutyCycle(2.5)
                 time.sleep(8)
-                serv2.ChangeDutyCycle(12.5)
+                serv2.ChangeDutyCycle(10.5)
             # Trash
             elif jsresp == 3:
                 serv3.ChangeDutyCycle(2.5)
                 time.sleep(8)
-                serv3.ChangeDutyCycle(12.5)
+                serv3.ChangeDutyCycle(10.5)
             # ALL
             else:
                 serv1.ChangeDutyCycle(2.5)
                 serv2.ChangeDutyCycle(2.5)
                 serv3.ChangeDutyCycle(2.5)
                 time.sleep(8)
-                serv1.ChangeDutyCycle(12.5)
-                serv2.ChangeDutyCycle(12.5)
-                serv3.ChangeDutyCycle(12.5)
+                serv1.ChangeDutyCycle(10.5)
+                serv2.ChangeDutyCycle(10.5)
+                serv3.ChangeDutyCycle(10.5)
 
             time.sleep(5)
+        else:
+            cooldown = cooldown - 1
 
     print("Stopping Servos")
     serv1.stop()
