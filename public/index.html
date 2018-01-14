@@ -45,7 +45,7 @@
 
     <div class="container">
       <div class="col-md-12">
-        <h1>Stats about your cans </h1>
+        <h1>Stats about your trash </h1>
       </div>
 
     </div>
@@ -61,7 +61,9 @@
         <script>
           getData(createDoughnut);
 
+
           function createDoughnut (garbageVal, recycleVal, compostVal) {
+
 
 
             var myChart = new Chart(document.getElementById("doughnut-chart"), {
@@ -78,15 +80,14 @@
               },
               options: {
                 hover: false,
-                title: {
-                  display: false,
-                  text: 'Trash type'
-                }
+                animation: false
               }
             });
 
 
             function addData(garbageVal, recycleVal, compostVal) {
+
+
 
               myChart = new Chart(document.getElementById("doughnut-chart"), {
                 type: 'doughnut',
@@ -102,10 +103,6 @@
                 },
                 options: {
                   hover: false,
-                  title: {
-                    display: false,
-                    text: 'Trash type'
-                  },
                   animation: false
                 }
               });
@@ -166,6 +163,7 @@
                     }]
                 },
                 options: {
+                  animation: false,
                   hover: false,
                   legend: {
                     display: false
@@ -185,7 +183,14 @@
 
             function addData(garbageVal, recycleVal, compostVal) {
 
-              myChart = new Chart(ctx, {
+
+                var total = 50;
+
+                garbageVal = garbageVal / total * 100;
+                recycleVal = recycleVal / total * 100;
+                compostVal = compostVal / total * 100;
+
+                myChart = new Chart(ctx, {
                   type: 'bar',
                   data: {
                       labels: ["Garbage", "Recycling", "Compost"],

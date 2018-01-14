@@ -42,9 +42,12 @@ module.exports.request = function(request, response){
 function doAfter(data, response){
   console.log("doAfter " + data)
   switch (data) {
-    case 1: server.incCompost()
-    case 2: server.incRecycle()
-    case 3: server.incGarbage()
+    case 1: server.incCompost();
+            break;
+    case 2: server.incRecycle();
+            break;
+    case 3: server.incGarbage();
+            break;
   }
 
   response.json({
