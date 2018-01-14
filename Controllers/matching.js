@@ -20,6 +20,8 @@ module.exports.matching=function(jsonObjectArray, call2, response) {
     map["Drink"] = 2;
     map["Bag"] = 3;
     map["Styrofoam"] = 3;
+    map["Plastic Wrap"] = 3;
+    map["Plastic Bag"] = 3;
     
     console.log("matching...");
     console.log(jsonObjectArray.Labels.length);
