@@ -1,7 +1,7 @@
 import requests
 import base64
 import numpy as np
-from cv2 import *
+import cv2
 import json
 import RPi.GPIO as GPIO
 import time
@@ -23,7 +23,7 @@ def find_marker(image):
     # find the contours in the edged image and keep the largest one;
     # we'll assume that this is our piece of paper in the image
     (cnts, _) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    c = max(cnts, key = cv2.contourArea)
+    c = cv2.max(cnts, key = contourArea)
  
     # compute the bounding box of the of the paper region and return it
     return cv2.minAreaRect(c)[1]
@@ -43,7 +43,7 @@ def main():
     GPIO.setup(15, GPIO.OUT)
     serv3 = GPIO.PWM(15, 50)
 
-    cam = VideoCapture(0)
+    cam = cv2.VideoCapture(0)
     if not cam.isOpened():
         print("Unable to open camera")
         clean_exit()
@@ -53,6 +53,7 @@ def main():
     serv2.start(12.5)
     serv3.start(12.5)
 
+    print(cont)
     while cont:
         print("Starting img capture")
         if cam.isOpened():
@@ -61,7 +62,6 @@ def main():
             print("Camera Lost")
             clean_exit()
             sys.exit(1)
-        cam.release()
 
         s, jimg = imencode(".jpeg", img)
 
@@ -103,23 +103,30 @@ def main():
 
             time.sleep(5)
 
-        serv1.stop()
-        serv2.stop()
-        serv3.stop()
+    print("Stopping Servos")
+    serv1.stop()
+    serv2.stop()
+    serv3.stop()
+    cam.release()
 
 def clean_exit():
+    print("Cleaning up")
     GPIO.cleanup()
 
 def signal_handler(signal, frame):
-        cont = False
+#        cont = False
         clean_exit()
         sys.exit(0)
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
-    try:
+    main()
+
+    """try:
         main()
         clean_exit()
-    except:
+    except Exception as e:
+	print(e)
         clean_exit()
         sys.exit(1)
+    """
