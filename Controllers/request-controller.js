@@ -1,43 +1,33 @@
 const fs = require('fs');
 var S3FS = require('s3fs');
+const AWS = require('aws-sdk');
 
+//Sends the image to an s3 bucket so far...
 module.exports.request = function(request, response){
-		var image = request.image;
-		//Parse base64 image and store in root folder with filename 'currentImg'
-		fs.open('currentImg.txt', image, function(err, fd){
-			if(err){
-				throw 'error opening file: ' + err;
-			}
-
-			fs.write(fd, )
-		})
-
-		//Doesn't work
-		fs.writeFile('currentImg.txt', image, function(err) {
-			if(err){
-				var mes = 'Error while writing file to server' + err;
-				response.json({
-					status: 0,
-					message: mes
-				});
-				return console.log(err);
-			}
-			console.log('File saved!');
+		var image = request.body.image;
+		var buf = new Buffer(request.body.image.replace(/^data:image\/\w+;base64,/, ""), "base64");
+		AWS.config.update({
+  		accessKeyId: 'AKIAI7GICYUEB2SRSQUA',
+  		secretAccessKey: 'D+uLnTf5qzV0lt3vZVCIkbMs1cO8Ye4lcpGCq9h5',
+  		region: 'us-east-1'
 		});
-
-		//Works
-		var sf3sImpl = new S3FS('trash-cam', {
-			accessKeyId: "AKIAI7GICYUEB2SRSQUA",
-			secretAccessKey: "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"
+		const s3 = new AWS.S3({
+  			apiVersion: '2006-03-01',
+  			params: { Bucket: 'trash-cam' }
 		});
+		var params = {
+		Body: buf,
+		Key: "toProcess.jpg",
+		ContentEncoding: 'base64',
+		ContentType: 'image/jpeg'
+		};
+		s3.putObject(params, function(err,data){
+			if(err){
 
-		sf3sImpl.create();
-		var stream = fs.createReadStream('currentImg.txt');
-		sf3sImpl.writeFile('toProcess.txt', stream).then(function(){
-			fs.unlink('currentImg.txt', function(err){
-				if(err){
-					console.error(err);
-				}
-			});
+				console.log(err, err.stack);
+			}
+			else{
+				console.log(data);
+			}
 		});
 	}
