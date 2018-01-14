@@ -13,8 +13,8 @@ module.exports.request = function(request, response){
 		var image = request.body.image;
 		var buf = new Buffer(request.body.image.replace(/^data:image\/\w+;base64,/, ""), "base64");
 		AWS.config.update({
-  		accessKeyId: keys.key0,
-  		secretAccessKey: keys.key1,
+  		accessKeyId: 'AKIAJHYF3OFCBPFUMWKQ',
+  		secretAccessKey: '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',
   		region: 'us-east-1'
 		});
 		const s3 = new AWS.S3({
