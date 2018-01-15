@@ -16,6 +16,7 @@ https://devpost.com/software/trashcam
 2. If the object is larger than a threshold value, the image is posted to a lightsail server running server.js.
 3. The server puts the image into an s3 bucket and runs AWS Rekognition on it to get a list of tags for the image.
 4. If a tag with high enough confidence matches one of our known tags, we respond to the post request with numbers that correspond to either trash, recycling, or compost.  If our server doesn't recognize the tags, we send a number that corresponds to opening all 3 bins.
-5. The rPie gets the response and opens the correct bin(s).
+5. The selection is recorded for the front-end statistics page.
+6. The rPie gets the response and opens the correct bin(s).
 
 
