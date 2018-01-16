@@ -20,7 +20,7 @@ https://devpost.com/software/trashcam
 6. The rPie gets the response and opens the correct bin(s).
 
 ### Pictures and Video
-[![IMAGE ALT TEXT HERE](https://github.com/MuchToKnow/nwHacks2018/blob/master/photos/box.jpg)](https://www.youtube.com/watch?v=U-evh93Bb8s)
+![IMAGE ALT TEXT HERE](https://github.com/MuchToKnow/nwHacks2018/blob/master/photos/box.jpg)](https://www.youtube.com/watch?v=U-evh93Bb8s)
 ![Alt text](https://github.com/MuchToKnow/nwHacks2018/blob/master/photos/interface.png "Main screen")
 
 
