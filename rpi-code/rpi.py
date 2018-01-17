@@ -7,13 +7,19 @@ import RPi.GPIO as GPIO
 import time
 import sys
 import signal
+import thread
 
 
 img_path = "im2.jpg"
 url = "http://35.163.191.108:3000/api/request"
+OTIME = 5  # How long the bins are open for
+CLOSE_DC = 10.5  # Duty Cycle for closed servo
+OPEN_DC = 2.5  # Duty Cycle for open servo
+
 aves = [10000, 10000, 10000, 10000] 
 aveidx = 0
 cooldown = 10
+servLock = None
 
 cont = True
 
@@ -45,6 +51,39 @@ def large_enough(image, threshold):
     print(area)
     return area < threshold
 
+def open_bin(binNum, s1, s2, s3):
+    global servLock
+    # Compost
+    if jsresp == 1:
+        servLock = "1"
+        serv1.ChangeDutyCycle(OPEN_DC)
+        time.sleep(OTIME)
+        serv1.ChangeDutyCycle(CLOSE_DC)
+    # Recycle
+    elif jsresp == 2:
+        servLock = "2"
+        serv2.ChangeDutyCycle(OPEN_DC)
+        time.sleep(OTIME)
+        serv2.ChangeDutyCycle(CLOSE_DC)
+    # Trash
+    elif jsresp == 3:
+        servLock = "3"
+        serv3.ChangeDutyCycle(OPEN_DC)
+        time.sleep(OTIME)
+        serv3.ChangeDutyCycle(CLOSE_DC)
+    # ALL
+    else:
+        servLock = "1230"
+        serv1.ChangeDutyCycle(OPEN_DC)
+        serv2.ChangeDutyCycle(OPEN_DC)
+        serv3.ChangeDutyCycle(OPEN_DC)
+        time.sleep(OTIME)
+        serv1.ChangeDutyCycle(CLOSE_DC)
+        serv2.ChangeDutyCycle(CLOSE_DC)
+        serv3.ChangeDutyCycle(CLOSE_DC)
+    # time.sleep(2)
+    servLock = None
+
 def main():
     global cooldown
     print("Initing GPIO and Webcam")
@@ -62,9 +101,9 @@ def main():
         clean_exit()
 
     # Start the Servos
-    serv1.start(10.5)
-    serv2.start(10.5)
-    serv3.start(10.5)
+    serv1.start(CLOSE_DC)
+    serv2.start(CLOSE_DC)
+    serv3.start(CLOSE_DC)
 
     print(cont)
     while cont:
@@ -90,32 +129,11 @@ def main():
             jsresp = r.json()["status"]
             print(jsresp)
 
-            # Compost
-            if jsresp == 1:
-                serv1.ChangeDutyCycle(2.5)
-                time.sleep(8)
-                serv1.ChangeDutyCycle(10.5)
-            # Recycle
-            elif jsresp == 2:
-                serv2.ChangeDutyCycle(2.5)
-                time.sleep(8)
-                serv2.ChangeDutyCycle(10.5)
-            # Trash
-            elif jsresp == 3:
-                serv3.ChangeDutyCycle(2.5)
-                time.sleep(8)
-                serv3.ChangeDutyCycle(10.5)
-            # ALL
-            else:
-                serv1.ChangeDutyCycle(2.5)
-                serv2.ChangeDutyCycle(2.5)
-                serv3.ChangeDutyCycle(2.5)
-                time.sleep(8)
-                serv1.ChangeDutyCycle(10.5)
-                serv2.ChangeDutyCycle(10.5)
-                serv3.ChangeDutyCycle(10.5)
+            while not jsresp in servLock:
+                pass
 
-            time.sleep(5)
+            thread.start_new_thread( open_bin, (jsresp, serv1, serv2, serv3))
+
         else:
             cooldown = cooldown - 1
 
