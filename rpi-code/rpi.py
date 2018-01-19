@@ -51,22 +51,22 @@ def large_enough(image, threshold):
     print(area)
     return area < threshold
 
-def open_bin(binNum, s1, s2, s3):
+def open_bin(binNum, serv1, serv2, serv3):
     global servLock
     # Compost
-    if "1" in jsresp:
+    if "1" in binNum:
         servLock = "1"
         serv1.ChangeDutyCycle(OPEN_DC)
         time.sleep(OTIME)
         serv1.ChangeDutyCycle(CLOSE_DC)
     # Recycle
-    elif "2" in jsresp:
+    elif "2" in binNum:
         servLock = "2"
         serv2.ChangeDutyCycle(OPEN_DC)
         time.sleep(OTIME)
         serv2.ChangeDutyCycle(CLOSE_DC)
     # Trash
-    elif "3" in jsresp:
+    elif "3" in binNum:
         servLock = "3"
         serv3.ChangeDutyCycle(OPEN_DC)
         time.sleep(OTIME)
@@ -129,11 +129,14 @@ def main():
 
             jsresp = str(r.json()["status"])
             print(jsresp)
+            print(servLock)
 
-            while not jsresp in servLock:
+            while (jsresp in servLock):
                 print("LOCKED")
+                time.sleep(1)
                 pass
 
+            print("Launching SERVO")
             thread.start_new_thread( open_bin, (jsresp, serv1, serv2, serv3))
 
         else:
