@@ -19,7 +19,7 @@ OPEN_DC = 2.5  # Duty Cycle for open servo
 aves = [10000, 10000, 10000, 10000] 
 aveidx = 0
 cooldown = 10
-servLock = None
+servLock = "9"
 
 cont = True
 
@@ -82,7 +82,7 @@ def open_bin(binNum, s1, s2, s3):
         serv2.ChangeDutyCycle(CLOSE_DC)
         serv3.ChangeDutyCycle(CLOSE_DC)
     # time.sleep(2)
-    servLock = None
+    servLock = "9"
 
 def main():
     global cooldown
@@ -117,7 +117,7 @@ def main():
 
         s, jimg = cv2.imencode(".jpeg", img)
 
-        isObj = large_enough(img, 6000)
+        isObj = large_enough(img, 2000)
 
         if isObj and cooldown < 0:
             cooldown = 10
@@ -129,7 +129,7 @@ def main():
             jsresp = r.json()["status"]
             print(jsresp)
 
-            while servLock not None and not jsresp in servLock:
+            while not jsresp in servLock:
                 pass
 
             thread.start_new_thread( open_bin, (jsresp, serv1, serv2, serv3))
