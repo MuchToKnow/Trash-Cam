@@ -82,6 +82,7 @@ def open_bin(binNum, s1, s2, s3):
         serv2.ChangeDutyCycle(CLOSE_DC)
         serv3.ChangeDutyCycle(CLOSE_DC)
     # time.sleep(2)
+    print("servo is: " + servLock)
     servLock = "9"
 
 def main():
@@ -130,6 +131,7 @@ def main():
             print(jsresp)
 
             while not jsresp in servLock:
+                print("LOCKED")
                 pass
 
             thread.start_new_thread( open_bin, (jsresp, serv1, serv2, serv3))
