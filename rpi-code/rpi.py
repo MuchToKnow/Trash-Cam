@@ -129,7 +129,7 @@ def main():
             jsresp = r.json()["status"]
             print(jsresp)
 
-            while not jsresp in servLock:
+            while servLock not None and not jsresp in servLock:
                 pass
 
             thread.start_new_thread( open_bin, (jsresp, serv1, serv2, serv3))
