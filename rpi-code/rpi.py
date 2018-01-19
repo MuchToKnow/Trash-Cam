@@ -54,19 +54,19 @@ def large_enough(image, threshold):
 def open_bin(binNum, s1, s2, s3):
     global servLock
     # Compost
-    if jsresp == 1:
+    if "1" in jsresp:
         servLock = "1"
         serv1.ChangeDutyCycle(OPEN_DC)
         time.sleep(OTIME)
         serv1.ChangeDutyCycle(CLOSE_DC)
     # Recycle
-    elif jsresp == 2:
+    elif "2" in jsresp:
         servLock = "2"
         serv2.ChangeDutyCycle(OPEN_DC)
         time.sleep(OTIME)
         serv2.ChangeDutyCycle(CLOSE_DC)
     # Trash
-    elif jsresp == 3:
+    elif "3" in jsresp:
         servLock = "3"
         serv3.ChangeDutyCycle(OPEN_DC)
         time.sleep(OTIME)
@@ -126,7 +126,7 @@ def main():
             print("Sending POST")
             r = requests.post(url, json={"image" : b64img})
 
-            jsresp = r.json()["status"]
+            jsresp = str(r.json()["status"])
             print(jsresp)
 
             while not jsresp in servLock:
